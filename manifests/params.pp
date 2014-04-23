@@ -59,7 +59,7 @@ class logstash::params {
       $logstash_user  = 'root'
       $logstash_group = 'root'
     }
-    'Darwin': {
+    'Darwin','FreeBSD': {
       $logstash_user  = 'root'
       $logstash_group = 'wheel'
     }
@@ -75,7 +75,7 @@ class logstash::params {
     'Linux': {
       $download_tool = 'wget -O'
     }
-    'Darwin': {
+    'Darwin','FreeBSD': {  # smarter, "portish" way to do it should be checked
       $download_tool = 'curl -o'
     }
     default: {
@@ -95,6 +95,11 @@ class logstash::params {
       $configdir = '/Library/Application Support/Logstash'
       $package_dir = '/Library/Logstash/swdl'
       $installpath = '/Library/Logstash'
+    }
+    'FreeBSD': {
+      $configdir = '/usr/local/etc/logstash'
+      $package_dir = '/usr/local/logstash/swdl'
+      $installpath = '/usr/local/logstash'
     }
     default: {
       fail("\"${module_name}\" provides no config directory default value
